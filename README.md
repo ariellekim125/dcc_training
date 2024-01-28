@@ -46,3 +46,9 @@ For example, to list installed packages under the ```dcc_training``` environment
 ```sh
 conda list --name dcc_training
 ```
+### Install Mamba (in the not recommend way)
+The command to install `mamba` with an existing `conda` install is:
+```sh
+conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
+```
+Note: installing `mamba` into any other environment than base is not supported.
