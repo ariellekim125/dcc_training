@@ -46,9 +46,22 @@ For example, to list installed packages under the ```dcc_training``` environment
 ```sh
 conda list --name dcc_training
 ```
-### Install Mamba (in the not recommend way)
+### Install Mamba (in the non-recommended way)
 The command to install `mamba` with an existing `conda` install is:
 ```sh
 conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
 ```
 Note: installing `mamba` into any other environment than base is not supported.
+
+Check if `mamba` has been installed:
+
+```sh
+mamba -h
+```
+Note: this will pull up a help file if `mamba` has been successfully installed.
+### Software Setup
+To install nanoplot, use this command:
+```sh
+mamba create -n nanoplot -c bioconda nanoplot
+```
+Note: the`-n` flag creates a new environment named nanoplot, `-c` flag tells `mamba` to look for `nanoplot` in a channel named `bioconda`
