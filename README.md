@@ -65,3 +65,49 @@ To install nanoplot, use this command:
 mamba create -n nanoplot -c bioconda nanoplot
 ```
 Note: the`-n` flag creates a new environment named nanoplot, `-c` flag tells `mamba` to look for `nanoplot` in a channel named `bioconda`
+
+Check if `nanoplot` has been installed:
+
+```sh
+NanoPlot -h
+```
+
+### Run `cat_reads.sh`
+Use `sbatch` to run a script in batch mode:
+```sh
+sbatch <path.file>
+```
+
+`cat_reads.sh` is a script to merge the reads from each pool into a single file
+To run `cat_reads.sh`:
+```sh
+sbatch scripts/environmental_sequencing/ont_trial/cat_reads.sh
+```
+Note: make sure your directories match those of the script
+
+Check if your job is running:
+```sh
+sacct -j <jobID>
+```
+### Run `nanoplot_qc.sh`
+`nanoplot_qc.sh` is a script to run a QC (quality control) report for each pool
+To run `nanoplot_qc.sh`:
+```sh
+sbatch scripts/environmental_sequencing/ont_trial/nanoplot_qc.sh
+```
+Note: if there are errors, check the output file and versions of `NanoPlot`:
+```sh
+Nanoplot -v
+```
+To move the `analyses/environmental_sequencing` directory from the DCC to your local computer:
+First, make a new directory with the same name on your local computer:
+```sh
+mkdir analyses
+```
+Next, use `rsync` to move the directory `environmental_sequencing` onto your local computer:
+``` sh
+rsync -av ayk12@dcc-login.oit.duke.edu:/hpc/group/bio1/arielle/dcc_training/analyses/environmental_sequencing analyses
+```
+Note: open up the html files using file explorer to check QC report
+
+
