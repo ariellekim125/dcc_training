@@ -20,7 +20,7 @@ For example, to move `data` from your DCC directory under your `dcc_training` in
 scp -r ayk12@dcc-login.oit.duke.edu:/hpc/group/bio1/arielle/dcc_training/data .
 ```
 Note: Remember to add the `-r` flag when working with directories, the `.` also signifies the directory you are in.
-### Set up Conda
+### Set up `Conda`
 Use `conda create` command create an environment. The general syntax is:
 ```sh
 conda create -n env_name
@@ -46,7 +46,7 @@ For example, to list installed packages under the ```dcc_training``` environment
 ```sh
 conda list --name dcc_training
 ```
-### Install Mamba (in the non-recommended way)
+### Install `Mamba` (in the non-recommended way)
 The command to install `mamba` with an existing `conda` install is:
 ```sh
 conda install -n base --override-channels -c conda-forge mamba 'python_abi=*=*cp*'
@@ -59,12 +59,12 @@ Check if `mamba` has been installed:
 mamba -h
 ```
 Note: this will pull up a help file if `mamba` has been successfully installed.
-### Software Setup
-To install nanoplot, use this command:
+### Install `NanoPlot`
+To install `nanoplot`, use this command:
 ```sh
 mamba create -n nanoplot -c bioconda nanoplot
 ```
-Note: the`-n` flag creates a new environment named nanoplot, `-c` flag tells `mamba` to look for `nanoplot` in a channel named `bioconda`
+Note: the`-n` flag creates a new environment named nanoplot, `-c` flag tells `mamba` to look for `nanoplot` in a channel named `bioconda`.
 
 Check if `nanoplot` has been installed:
 
@@ -78,12 +78,12 @@ Use `sbatch` to run a script in batch mode:
 sbatch <path.file>
 ```
 
-`cat_reads.sh` is a script to merge the reads from each pool into a single file
+`cat_reads.sh` is a script to merge the reads from each pool into a single file.
 To run `cat_reads.sh`:
 ```sh
 sbatch scripts/environmental_sequencing/ont_trial/cat_reads.sh
 ```
-Note: make sure your directories match those of the script
+Note: make sure your directories match those of the script.
 
 Check if your job is running:
 ```sh
@@ -108,6 +108,41 @@ Next, use `rsync` to move the directory `environmental_sequencing` onto your loc
 ``` sh
 rsync -av ayk12@dcc-login.oit.duke.edu:/hpc/group/bio1/arielle/dcc_training/analyses/environmental_sequencing analyses
 ```
-Note: open up the html files using file explorer to check QC report
+Note: open up the html files using file explorer to check QC report.
+### Install `Demultiplex`
+To install `demultiplex`, use this code:
+```sh
+mamba create -n demultiplex python=3.9
+git clone https://github.com/jfjlaros/demultiplex
+cd demultiplex
+pip install .
+```
+### Install `Cutadapt`
+To install `cutadapt`, use this command:
+```sh
+mamba create -n cutadapt -c bioconda -c defaults -c conda-forge cutadapt=4.5
+```
+Note: `cutadapt` finds and removes unwanted sequences from the reads.
+### Install `Kraken2`
+To install `kraken2`, use this code:
+```sh
+mamba create -n kraken2 -c conda-forge -c bioconda kraken2 krakentools bracken
+```
+Note: `kraken` is a program for k-mer based taxonomic assignation of reads.
+To create the path to where you want the `Greengenes` 16S database:
+```sh
+greengenes_db_path=/hpc/group/bio1/arielle/dcc_training/kraken2/greengenes/greengenes
+```
+Note: use `echo ${variablename}` to check what the variable stores.
+To build the 16S database:
+```sh
+kraken2-build --db /hpc/group/bio1/arielle/dcc_training/kraken2/greengenes/greengenes --special greengenes
+bracken-build -d /hpc/group/bio1/arielle/dcc_training/kraken2/greengenes/greengenes -t 8 -k 35 -l 1500
+```
+### Create `RStudio` project
+To create a new `RStudio` project under `dcc_training`, create a new project in the `dcc_training` directory.
+To ignore `RStudio` project file and history file, add to `.gitignore`.
+
+
 
 
