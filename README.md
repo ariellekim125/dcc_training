@@ -112,10 +112,9 @@ Note: open up the html files using file explorer to check QC report.
 ### Install `Demultiplex`
 To install `demultiplex`, use this code:
 ```sh
-mamba create -n demultiplex python=3.9
-git clone https://github.com/jfjlaros/demultiplex
-cd demultiplex
-pip install .
+mamba create -n demultiplex python
+mamba activate demultiplex
+pip install demultiplex
 ```
 ### Install `Cutadapt`
 To install `cutadapt`, use this command:
@@ -143,6 +142,10 @@ bracken-build -d /hpc/group/bio1/arielle/dcc_training/kraken2/greengenes/greenge
 To create a new `RStudio` project under `dcc_training`, create a new project in the `dcc_training` directory.
 To ignore `RStudio` project file and history file, add to `.gitignore`.
 
-
-
+## Run `demultiplex_raw.sh`
+`demultiplex_raw.sh` is a script to search for forward and reverse primers in each pool
+To run `demultiplex_raw.sh`:
+```sh
+sbatch scripts/environmental_sequencing/ont_trial/demultiplex_raw.sh
+```
 
