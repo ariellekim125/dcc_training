@@ -170,5 +170,16 @@ for sample in $(cat misc_files/environmental_sequencing/ont_trial/pool2_samples.
 done
 ```
 
-###
+### Run `trim_primers_and_barcodes.sh`
+`trim_primers_and_barcodes.sh` is a script that uses `cutadapt` to trim adapter and 16S primers from demultiplexed reads, retain only full length sequences, remove cases with barcode mismatches, and put reads in the same orientation.
+```sh
+sbatch scripts/environmental_sequencing/ont_trial/trim_primers_and_barcodes.sh
+```
+To remove unnecessary `demultiplex` output files:
+```sh
+rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*_f.fastq
+rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*_r.fastq
+rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*UNKNOWN*
+rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*barcoded.fastq
+```
 
