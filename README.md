@@ -90,7 +90,7 @@ Check if your job is running:
 sacct -j <jobID>
 ```
 ### Run `nanoplot_qc.sh`
-`nanoplot_qc.sh` is a script to run a QC (quality control) report for each pool
+`nanoplot_qc.sh` is a script to run a QC (quality control) report for each pool.
 To run `nanoplot_qc.sh`:
 ```sh
 sbatch scripts/environmental_sequencing/ont_trial/nanoplot_qc.sh
@@ -142,10 +142,33 @@ bracken-build -d /hpc/group/bio1/arielle/dcc_training/kraken2/greengenes/greenge
 To create a new `RStudio` project under `dcc_training`, create a new project in the `dcc_training` directory.
 To ignore `RStudio` project file and history file, add to `.gitignore`.
 
-## Run `demultiplex_raw.sh`
-`demultiplex_raw.sh` is a script to search for forward and reverse primers in each pool
+### Run `sort_barcodes.R`
+`sort_barcodes.R` is a script to prepare the barcode files for demultiplexing the ONT reads.
+```R
+Rscript scripts/environmental_sequencing/ont_trial/sort_barcodes.R
+```
+Note: ran this interactively in `RStudio`; transferred output to the DCC.
+
+### Run `demultiplex_raw.sh`
+`demultiplex_raw.sh` is a script to search for forward and reverse primers in each pool.
 To run `demultiplex_raw.sh`:
 ```sh
 sbatch scripts/environmental_sequencing/ont_trial/demultiplex_raw.sh
 ```
+Note: had to install `python` version 3.9 to successfully run demultiplex
+To concatenate the reads from the forward and reverse searches per sample:
+```sh
+for sample in $(cat misc_files/environmental_sequencing/ont_trial/pool1_samples.txt) ; do
+ cat analyses/environmental_sequencing/ont_trial/demultiplex/reads/*${sample}_f.fastq \
+  analyses/environmental_sequencing/ont_trial/demultiplex/reads/*${sample}_r.fastq > \
+  analyses/environmental_sequencing/ont_trial/demultiplex/reads/${sample}_barcoded.fastq
+done
+for sample in $(cat misc_files/environmental_sequencing/ont_trial/pool2_samples.txt) ; do
+ cat analyses/environmental_sequencing/ont_trial/demultiplex/reads/*${sample}_f.fastq \
+  analyses/environmental_sequencing/ont_trial/demultiplex/reads/*${sample}_r.fastq > \
+  analyses/environmental_sequencing/ont_trial/demultiplex/reads/${sample}_barcoded.fastq
+done
+```
+
+###
 
