@@ -183,3 +183,39 @@ rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*UNKNOWN*
 rm analyses/environmental_sequencing/ont_trial/demultiplex/reads/*barcoded.fastq
 ```
 
+### Run `kraken_greengenes.sh`:
+`kraken_greengenes.sh` assigns reads to taxonomic groups.
+```sh
+cat misc_files/environmental_sequencing/ont_trial/pool*_samples.txt > \
+ misc_files/environmental_sequencing/ont_trial/all_trial_samples.txt
+```
+```sh
+sbatch scripts/environmental_sequencing/ont_trial/kraken_greengenes.sh
+```
+
+### Install `kraken-biom`
+Inside of the `kraken2` `conda` environment:
+```sh
+pip install kraken-biom
+```
+Note: installing inside `kraken2` environment ensures correct version of `python`.
+
+### 
+To combine the pathways for all samples' `k2reports` into one text file:
+```sh
+sample=$(cat misc_files/environmental_sequencing/ont_trial/all_trial_samples.txt)
+
+for s in $sample ; do
+> entry="analyses/environmental_sequencing/ont_trial/kraken/greengenes/${s}/${s}.k2report"
+> echo ${entry}
+done > misc_files/environmental_sequencing/ont_trial/biom.txt
+```
+
+To create the `biom` file:
+```sh
+mkdir analyses/environmental_sequencing/ont_trial/biom
+
+sample=$(cat misc_files/environmental_sequencing/ont_trial/biom.txt)
+kraken-biom ${sample} --fmt json -o analyses/environmental_sequencing/ont_trial/biom/ont_trial.biom
+```
+
