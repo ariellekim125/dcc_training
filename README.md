@@ -193,14 +193,14 @@ cat misc_files/environmental_sequencing/ont_trial/pool*_samples.txt > \
 sbatch scripts/environmental_sequencing/ont_trial/kraken_greengenes.sh
 ```
 
-### Install `kraken-biom`
+### Install `kraken-biom`:
 Inside of the `kraken2` `conda` environment:
 ```sh
 pip install kraken-biom
 ```
 Note: installing inside `kraken2` environment ensures correct version of `python`.
 
-### 
+### Create `biom.txt`:
 To combine the pathways for all samples' `k2reports` into one text file:
 ```sh
 sample=$(cat misc_files/environmental_sequencing/ont_trial/all_trial_samples.txt)
@@ -219,3 +219,9 @@ sample=$(cat misc_files/environmental_sequencing/ont_trial/biom.txt)
 kraken-biom ${sample} --fmt json -o analyses/environmental_sequencing/ont_trial/biom/ont_trial.biom
 ```
 
+### Run `biom_analyses.R`
+`biom_analyses.R` is a script to create visualizations of the taxonomic compositions.
+```R
+Rscript scripts/environmental_sequencing/ont_trial/biom_analyses.R
+```
+Note: ran this interactively in `RStudio`
